@@ -5,30 +5,49 @@
  * board fills (tie)
  */
 
-var WIDTH = 7;
-var HEIGHT = 6;
+let WIDTH = 7;
+let HEIGHT = 6;
 
-var currPlayer = 1; // active player: 1 or 2
-var board = []; // array of rows, each row is array of cells  (board[y][x])
+let currPlayer = 1; // active player: 1 or 2
+let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
 
-function makeBoard() {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
+
+const makeBoard = () => {
+
+  for (let y = 0; y < HEIGHT; y++) {
+    let row = [];
+    for (let x = 0; x < WIDTH; x++) {
+      row.push(null);
+    }
+    board.push(row);
+  }
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
 
-function makeHtmlBoard() {
+
+const makeHtmlBoard = () => {
+
   // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
+  let htmlBoard = document.querySelector('#board');
 
   // TODO: add comment for this code
-  var top = document.createElement("tr");
+
+  //Create a TR element and set it to the variable top
+  let top = document.createElement("tr");
+
+  //give top an atribute of id = column-top
   top.setAttribute("id", "column-top");
+
+  //give top a click event listener which when clicked will run handleClick
   top.addEventListener("click", handleClick);
 
+  //loop through the x values, create a td element and set each td element with an 
+  //ID of whatever number is x as it loops and then append it to the TR that we just made & then append to board
   for (var x = 0; x < WIDTH; x++) {
     var headCell = document.createElement("td");
     headCell.setAttribute("id", x);
@@ -37,6 +56,8 @@ function makeHtmlBoard() {
   htmlBoard.append(top);
 
   // TODO: add comment for this code
+  //this is making the main board, setting up TR and TDs and giving each TD an ID of y and x values 
+  //appending it to the board 
   for (var y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
     for (var x = 0; x < WIDTH; x++) {
@@ -46,53 +67,77 @@ function makeHtmlBoard() {
     }
     htmlBoard.append(row);
   }
+
 }
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
-function findSpotForCol(x) {
+const findSpotForCol = (x) => {
   // TODO: write the real version of this, rather than always returning 0
-  return 0;
+  for (let y = board.length - 1; y >= 0; y--) {
+    if (board[y][x] === null) {
+      return y;
+    }
+  }
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
-function placeInTable(y, x) {
+const placeInTable = (y, x) => {
   // TODO: make a div and insert into correct table cell
+
+  let div = document.createElement('div');
+
+  div.classList.add('piece');
+  div.classList.add(`p${currPlayer}`);
+
+  let spot = document.getElementById(`${y}-${x}`)
+  spot.append(div);
 }
 
 /** endGame: announce game end */
 
-function endGame(msg) {
+const endGame = (msg) => {
   // TODO: pop up alert message
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
   // get x from ID of clicked cell
-  var x = +evt.target.id;
+  let x = +evt.target.id;
 
   // get next spot in column (if none, ignore click)
-  var y = findSpotForCol(x);
+  let y = findSpotForCol(x);
   if (y === null) {
     return;
   }
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
+  //Don't really understand this line !!!!!!!!!!!!!!!! updating the value of [y][x] to = p1 or 2?
+  board[y][x] = currPlayer;
   placeInTable(y, x);
 
   // check for win
   if (checkForWin()) {
+    // top.removeEventListener('click', handleClick); didn't work in this spot !!!!
     return endGame(`Player ${currPlayer} won!`);
   }
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  //Did not understand this line !!!!!!!!!!!!!!!!!!! don't understand double everys esp in es2015  
+  if (board.every(row => row.every(cell => cell))) {
+    // top.removeEventListener('click', handleClick); didn't work in this spot !!!!
+    return endGame('Tie!');
+  }
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  currPlayer = currPlayer === 1 ? 2 : 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -105,29 +150,60 @@ function checkForWin() {
 
     return cells.every(
       ([y, x]) =>
-        y >= 0 &&
-        y < HEIGHT &&
-        x >= 0 &&
-        x < WIDTH &&
-        board[y][x] === currPlayer
+      y >= 0 &&
+      y < HEIGHT &&
+      x >= 0 &&
+      x < WIDTH &&
+      board[y][x] === currPlayer
     );
   }
 
   // TODO: read and understand this code. Add comments to help you.
 
-  for (var y = 0; y < HEIGHT; y++) {
-    for (var x = 0; x < WIDTH; x++) {
-      var horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      var vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
-      var diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
-      var diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+  //Loop through the row and columns and gather all the possible divs that you can win with 
+  //when they are aligned 
+  for (let y = 0; y < HEIGHT; y++) {
+    for (let x = 0; x < WIDTH; x++) {
+      let horiz = [
+        [y, x],
+        [y, x + 1],
+        [y, x + 2],
+        [y, x + 3]
+      ];
+      let vert = [
+        [y, x],
+        [y + 1, x],
+        [y + 2, x],
+        [y + 3, x]
+      ];
+      let diagDR = [
+        [y, x],
+        [y + 1, x + 1],
+        [y + 2, x + 2],
+        [y + 3, x + 3]
+      ];
+      let diagDL = [
+        [y, x],
+        [y + 1, x - 1],
+        [y + 2, x - 2],
+        [y + 3, x - 3]
+      ];
 
+      //if any of the variable runned with _win is true then there is a winner so return true 
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
     }
   }
+
+  // top.removeEventListener('click', handleClick); didn't work in this spot !!!!!!!!!
+
+
 }
 
 makeBoard();
 makeHtmlBoard();
+
+
+//tried to add a remove event listener to stop the clicking but the places i put it on didn't work. !!!!
+//tried 3 diff spots
