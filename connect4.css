@@ -1,9 +1,12 @@
 /* game board table */
 
 #board td {
-  width: 50px;
-  height: 50px;
-  border: solid 1px #666;
+  width: 60px;
+  height: 60px;
+  border: solid 1.5px #666;
+  border-radius: 8%;
+  border-color: #7ea5a4;
+
 }
 
 /* pieces are div within game table cells: draw as colored circles */
@@ -15,7 +18,7 @@
   height: 80%;
   border-radius: 50%;
 
-  animation-duration: 1s;
+  animation-duration: .60s;
   animation-name: slidein;
 }
 
@@ -30,23 +33,63 @@
 }
 
 
-
-/* TODO: make pieces red/blue,  depending on player 1/2 piece */
-
 /* column-top is table row of clickable areas for each column */
 
 #column-top td {
   border: dashed 1px lightgray;
+  border-radius: 50%;
 }
 
 #column-top td:hover {
-  background-color: gold;
+  background-color: #B7C3D4;
 }
 
 .p1 {
-  background-color: teal;
+  /* background-color: teal; */
+  background-image: url(https://image.shutterstock.com/image-photo/kherson-ukraine-august-27-2016-260nw-474817792.jpg);
+  background-size: cover;
 }
 
 .p2 {
-  background-color: yellow;
+  /* background-color: yellow; */
+  background-image: url(https://st4.depositphotos.com/2172759/25678/v/1600/depositphotos_256780776-stock-illustration-cartoon-cute-soda-bottle-spread.jpg);
+  background-size: cover;
+}
+
+
+#board {
+  margin: 60px auto;
+  background-color: #FCF7EC;
+  border-radius: 10px;
+}
+
+.restartButton {
+  position: relative;
+  left: 276%;
+  top: 50px;
+  border-radius: 5px;
+  font-family: 'VT323', monospace;
+  width: 200%;
+
+}
+
+body {
+  background-color: #F6F6F6;
+  font-family: 'VT323', monospace;
+}
+
+
+img {
+  width: 400px;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  font-size: 100px;
+  color: #FF9E6C;
 }

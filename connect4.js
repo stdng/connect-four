@@ -68,6 +68,17 @@ const makeHtmlBoard = () => {
     htmlBoard.append(row);
   }
 
+  //creating my own restart button , tried to do e.preventdefault but didn't work!!!!!!!
+  let restart = document.createElement('button');
+  restart.classList.add('restartButton');
+  restart.innerText = 'Restart';
+  restart.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.location.href = '';
+  });
+
+  htmlBoard.append(restart);
+
 }
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
