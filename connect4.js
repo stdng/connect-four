@@ -113,7 +113,7 @@ const endGame = (msg) => {
   // TODO: pop up alert message
   setTimeout(function () {
     alert(msg);
-  }, 1000);
+  }, 700);
 
 }
 
@@ -210,9 +210,7 @@ function checkForWin() {
       }
     }
   }
-
   // top.removeEventListener('click', handleClick); didn't work in this spot !!!!!!!!!
-
 
 }
 
