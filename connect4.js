@@ -219,6 +219,5 @@ makeHtmlBoard();
 //questions have !!!!!! also below: 
 
 //tried to add a remove event listener to stop the clicking but the places i put it on didn't work. !!!!
-//tried 3 diff spots
-
+//tried 3 diff spots ^
 //no idea how the animation exactly works but it drops my pieces above the dashed circles 

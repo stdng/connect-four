@@ -58,19 +58,20 @@
 
 
 #board {
-  margin: 60px auto;
+  margin: 20px auto;
   background-color: #FCF7EC;
   border-radius: 10px;
 }
 
 .restartButton {
   position: relative;
-  left: 276%;
+  left: 240%;
   top: 50px;
   border-radius: 5px;
   font-family: 'VT323', monospace;
   width: 200%;
-
+  font-size: 20px;
+  background-color: #90D1BD;
 }
 
 body {
