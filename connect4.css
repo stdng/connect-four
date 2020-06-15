@@ -14,7 +14,22 @@
   width: 80%;
   height: 80%;
   border-radius: 50%;
+
+  animation-duration: 1s;
+  animation-name: slidein;
 }
+
+@keyframes slidein {
+  from {
+    transform: translateY(-350px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+
 
 /* TODO: make pieces red/blue,  depending on player 1/2 piece */
 
