@@ -111,7 +111,10 @@ const placeInTable = (y, x) => {
 
 const endGame = (msg) => {
   // TODO: pop up alert message
-  alert(msg);
+  setTimeout(function () {
+    alert(msg);
+  }, 1000);
+
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -135,7 +138,7 @@ function handleClick(evt) {
   // check for win
   if (checkForWin()) {
     // top.removeEventListener('click', handleClick); didn't work in this spot !!!!
-    return endGame(`Player ${currPlayer} won!`);
+    return endGame(`Player ${currPlayer} won!`, y, x);
   }
 
   // check for tie
@@ -149,6 +152,7 @@ function handleClick(evt) {
   // switch players
   // TODO: switch currPlayer 1 <-> 2
   currPlayer = currPlayer === 1 ? 2 : 1;
+
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -221,3 +225,4 @@ makeHtmlBoard();
 //tried to add a remove event listener to stop the clicking but the places i put it on didn't work. !!!!
 //tried 3 diff spots ^
 //no idea how the animation exactly works but it drops my pieces above the dashed circles 
+//issue with left box being more wider than the rest 
