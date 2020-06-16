@@ -11,6 +11,8 @@ let HEIGHT = 6;
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
 
+let gameOver = false; //to stop event when it's true 
+
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
@@ -68,12 +70,10 @@ const makeHtmlBoard = () => {
     htmlBoard.append(row);
   }
 
-  //creating my own restart button , tried to do e.preventdefault but didn't work!!!!!!!
   let restart = document.createElement('button');
   restart.classList.add('restartButton');
   restart.innerText = 'Restart';
   restart.addEventListener('click', function (e) {
-    e.preventDefault();
     document.location.href = '';
   });
 
@@ -111,9 +111,15 @@ const placeInTable = (y, x) => {
 
 const endGame = (msg) => {
   // TODO: pop up alert message
+
   setTimeout(function () {
     alert(msg);
   }, 700);
+
+  //you need to get the top row from the HTML 
+  let top = document.getElementById('column-top');
+  //then remove event listener 
+  top.removeEventListener('click', handleClick);
 
 }
 
@@ -131,14 +137,16 @@ function handleClick(evt) {
 
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
+
   //Don't really understand this line !!!!!!!!!!!!!!!! updating the value of [y][x] to = p1 or 2?
+
   board[y][x] = currPlayer;
   placeInTable(y, x);
 
   // check for win
   if (checkForWin()) {
-    // top.removeEventListener('click', handleClick); didn't work in this spot !!!!
-    return endGame(`Player ${currPlayer} won!`, y, x);
+    gameOver = true;
+    return endGame(`Player ${currPlayer} won!`);
   }
 
   // check for tie
@@ -210,7 +218,6 @@ function checkForWin() {
       }
     }
   }
-  // top.removeEventListener('click', handleClick); didn't work in this spot !!!!!!!!!
 
 }
 
@@ -219,8 +226,5 @@ makeHtmlBoard();
 
 
 //questions have !!!!!! also below: 
-
-//tried to add a remove event listener to stop the clicking but the places i put it on didn't work. !!!!
-//tried 3 diff spots ^
 //no idea how the animation exactly works but it drops my pieces above the dashed circles 
 //issue with left box being more wider than the rest 
